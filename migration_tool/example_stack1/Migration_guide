@@ -1,0 +1,30 @@
+You are a software engineer who is tasked to migrate the code of current CDK stack from VPCv1 to VPCv2, in order to do that,
+ you will first need to determine where VPC is defined in existing CDK stack definition, scan for the files in VpcV1 stack and look for code defintion new VPC(), 
+ change it to new VPCv2().
+For code references and import for VPCv2 use path /Users/shikagg/shikha372_cdk_fork/aws-cdk/packages/@aws-cdk/aws-ec2-alpha
+Below are the property Mapping details which can be reference to make the changes from VPC to VPCv2
+new VPC() should now be new VPCv2. 
+For cidr range, where signalled as current value keep the value as it is
+{
+// Old
+cidr: <current_value>,
+
+// new
+primaryAddressBlock: IpAddresses.ipv4(<current_value>),
+}
+
+SubnetConfiguration will be new subnet entries defined using helper method in VPCv2 class `addSubnets`, to map subnetIP, generate the sid using 
+utility function subnetId, passing index value and id of each subnet configuration
+
+const sid = subnetId('isolatedSubnet', <index value>);
+eg: const sid = subnetId('isolatedSubnet', 0);
+
+and then look into synthesized template at path
+/Users/shikagg/migration_tool/example_stack1/cdk.out/ExampleStack1Stack.template.json to fetch below values
+
+{
+        ipv4CidrBlock,
+        availabilityZone,
+        subnetType : //map from subnet configuration prop
+        
+};

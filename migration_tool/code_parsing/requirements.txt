@@ -1,0 +1,13 @@
+aws-cdk-lib>=2.0.0
+constructs>=10.0.0
+typing-extensions
+boto3>=1.28.0
+langchain>=0.1.0
+langgraph>=0.0.10
+codegen
+langchain_aws
+langgraph
+click>=8.0.0
+rich>=10.0.0
+rich-click>=1.7.0
+langchain-core>=0.1.0
